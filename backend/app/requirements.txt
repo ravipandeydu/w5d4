@@ -1,0 +1,35 @@
+# Core Framework
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+pydantic>=2.4.2
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Document Processing
+unstructured>=0.10.8
+python-docx>=0.8.11
+python-pptx>=0.6.21
+openpyxl>=3.1.2
+pandas>=2.1.1
+nbformat>=5.9.2
+markdown>=3.5
+Pillow>=10.0.1
+
+# RAG & Embeddings
+langchain>=0.0.325
+sentence-transformers>=2.2.2
+chromadb>=0.4.15
+faiss-cpu>=1.7.4
+
+# Claude Integration
+anthropic>=0.5.0
+
+# Real-time Features
+websockets>=11.0.3
+firebase-admin>=6.2.0
+
+# Utilities
+python-dotenv>=1.0.0
+loguru>=0.7.2
+tenacity>=8.2.3

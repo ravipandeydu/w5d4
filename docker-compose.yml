@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./backend/app:/app/app
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      - chroma
+
+  frontend-react:
+    build:
+      context: ./frontend/react-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/react-app/src:/app/src
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - backend
+
+  frontend-streamlit:
+    build:
+      context: ./frontend/streamlit_app
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend/streamlit_app:/app
+    environment:
+      - API_URL=http://backend:8000/api/v1
+    depends_on:
+      - backend
+
+  chroma:
+    image: chromadb/chroma
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/chroma:/chroma/data
+    environment:
+      - CHROMA_DB_IMPL=duckdb+parquet
+      - PERSIST_DIRECTORY=/chroma/data
